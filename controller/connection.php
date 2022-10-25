@@ -2,7 +2,7 @@
 $servername='localhost';
 $username='root';
 $password='';
-$dbname='2A13';
+$dbname='webproject';
 try{
     $pdo =new PDO(
         "mysql:host=$servername;dbname=$dbname",
@@ -14,10 +14,9 @@ try{
 
         ]
         );
-    echo "ali";
+        echo "good";
 }
 catch( PDOException $e){
-echo "not good".$e->getMessage();
+    echo "Errer".$e->getMessage();
 }
-
 ?>

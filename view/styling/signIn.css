@@ -1,7 +1,7 @@
+body{
+    background-color: black;
+}
 .d-grid{
-    position: absolute;
-    top: 30%;
-    left: 40%;
     background-color: brown;
     justify-content: center;
     align-items: center;
