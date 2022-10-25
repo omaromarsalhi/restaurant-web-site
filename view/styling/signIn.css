@@ -1,4 +1,10 @@
 .d-grid{
-    row-gap:500px;
-    column-gap: 500px;
+    position: absolute;
+    top: 30%;
+    left: 40%;
+    background-color: brown;
+    justify-content: center;
+    align-items: center;
+    padding: 2%;
+    border-radius: 20%;
 }
