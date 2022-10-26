@@ -1,4 +1,5 @@
 <?php
+require '../controller/connection.php';
 class Users_DB{
     public $firstName;
     public $lastName;
@@ -8,15 +9,17 @@ class Users_DB{
     public $phNumber;
 
 
-    public function __construct($firstName,$lastName,$email,$dateOfBirth,$password,$phNumber)
+    function retrive_users_db()
     {
-        $this->firstName=$firstName;
-        $this->lastName=$lastName;
-        $this->email=$email;
-        $this->dateOfBirth=$dateOfBirth;
-        $this->password=$password;
-        $this->phNumber=$phNumber;
+    $sql="SElECT * From users_db";
+    try{
+    $db =config::setConnection();
+    $liste=$db->query($sql);
+    return $liste;
     }
-
+    catch (Exception $e){
+        die('Erreur: '.$e->getMessage());
+    }
+}
 }
 ?>
