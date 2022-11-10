@@ -90,20 +90,17 @@ class Users_DBC{
                 $liste=mysqli_fetch_assoc($run);
                 return $liste;
             }
+
+
+
             function insertImage($id,$file)
             {
-                $sql="UPDATE users_db SET photo=:file WHERE id=:id ";
+                $sql="UPDATE users_db SET photo='$file' WHERE id='$id' ";
                 $db = config::getConnection();
-                try{
-                    $req=$db->prepare($sql);
-                    $req->bindValue(':file',$file);
-                    $req->bindValue(':id',$id);
-                    $req->execute();
-                    $liste=$req->fetch();
-                    return $liste;
-                }
-                catch (Exception $e){
-                    die('Erreur: '.$e->getMessage());
+                $run=mysqli_query($db,$sql);
+                if (!$run) {
+                    echo "<p> Query [$run] couldn't be executed </p>";
+                    echo mysqli_error($db);
                 }
             }
 

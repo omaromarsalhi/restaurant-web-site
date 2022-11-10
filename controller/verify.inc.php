@@ -30,7 +30,6 @@ if (isset($_POST['Upload'])){
     $holdIn=$photoToAdd->insertImage($user->getId(),$arg);
     $user2=new Users($holdIn['id'],$holdIn['firstName'],$holdIn['lastName'],$holdIn['email'],$holdIn['dob'],$holdIn['password'],$holdIn['phNumber'],$holdIn['address'],$holdIn['photo']);
     $_SESSION['user'] = $user2;
-    $_SESSION['holdInImage'] = $holdIn['photo'];
     header( 'Location: ../view/admin_PHP/admin_profile.php' );
 }
 else{
