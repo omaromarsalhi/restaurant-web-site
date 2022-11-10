@@ -15,30 +15,19 @@ class Users_DBC{
             }
 
 	    function addUser($users){
-            $sql="INSERT into users_db (firstName,lastName,email,dob,password,phNumber,address) values (:firstName,:lastName,:email,:dob,:password,:phNumber,:address)";
             $db = config::getConnection();
-            try{
-                $req=$db->prepare($sql);
-                $id=$users->getId();
-                $firstName=$users->getFirstName();
-                $lastName=$users->getLastName();
-                $email=$users->getEmail();
-                $dob=$users->getDob();;
-                $password=$users->getPassword();
-                $phNumber=$users->getPhNumber();
-                $address=$users->getAddress();
 
-                $req->bindValue(':firstName',$firstName);
-                $req->bindValue(':lastName',$lastName);
-                $req->bindValue(':email',$email);
-                $req->bindValue(':dob',$dob);
-                $req->bindValue(':password',$password);
-                $req->bindValue(':phNumber',$phNumber);
-                $req->bindValue(':address',$address);
-                $req->execute();
-            }
-            catch (Exception $e){
-                echo 'Erreur: '.$e->getMessage();
+            $firstName=$users->getFirstName();
+            $lastName=$users->getLastName();
+            $email=$users->getEmail();
+            $password=$users->getPassword();
+
+            $sql="INSERT into users_db(firstName,lastName,email,password)
+            values('$firstName','$lastName','$email','$password')";
+            $run=mysqli_query($db,$sql);
+            if (!$run) {
+                echo "<p> Query [$run] couldn't be executed </p>";
+                echo mysqli_error($db);
             }
 
 	    }
@@ -47,77 +36,59 @@ class Users_DBC{
             {
                 $sql="SElECT * FROM users_db";
                 $db = config::getConnection();
-                try{
-                $liste=$db->query($sql);
+                $run=mysqli_query($db,$sql);
+                if (!$run) {
+                    echo "<p> Query [$run] couldn't be executed </p>";
+                    echo mysqli_error($db);
+                }
+                $liste=mysqli_fetch_assoc($run);
                 return $liste;
-                }
-                catch (Exception $e){
-                    die('Erreur: '.$e->getMessage());
-                }
             }
 
 
         function deletUser($id)
             {
-                $sql="DELETE FROM users_db where id= :id";
+                $sql="DELETE FROM users_db where id='$id'";
                 $db = config::getConnection();
-                $req=$db->prepare($sql);
-                $req->bindValue(':id',$id);
-                try{
-                    $req->execute();
+                $run=mysqli_query($db,$sql);
+                if (!$run) {
+                    echo "<p> Query [$run] couldn't be executed </p>";
+                    echo mysqli_error($db);
                 }
-                catch (Exception $e){
-                    die('Erreur: '.$e->getMessage());
-                }
+                $liste=mysqli_fetch_assoc($run);
+                return $liste;
         }
 
 	    function updateUser($users){
-                $sql="UPDATE users_db SET id=:id, firstName=:firstName, lastName=:lastName, email=:email,password=:password,dob=:dob,phNumber=:phNumber,address=:address WHERE id=:id";
-
+                $id=$users->getId();
+                $firstName=$users->getFirstName();
+                $lastName=$users->getLastName();
+                $email=$users->getEmail();
+                $dob=$users->getDob();
+                $password=$users->getPassword();
+                $phNumber=$users->getPhNumber();
+                $address=$users->getAddress();
+                $sql="UPDATE users_db SET id='$id', firstName='$firstName', lastName='$lastName', email='$email',password='$password',dob='$dob',phNumber='$phNumber',address='$address' WHERE id='$id'";
                 $db = config::getConnection();
-                try{
-                    $req=$db->prepare($sql);
-                    $id=$users->getId();
-                    $firstName=$users->getFirstName();
-                    $lastName=$users->getLastName();
-                    $email=$users->getEmail();
-                    $dob=$users->getDob();
-                    $password=$users->getPassword();
-                    $phNumber=$users->getPhNumber();
-                    $address=$users->getAddress();
-                    $datas = array(':id'=>$id, ':firstName'=>$firstName, ':lastName'=>$lastName, ':email'=>$email,':password'=>$password,':dob'=>$dob, ':phNumber'=>$phNumber,':address'=>$address);
-                    $req->bindValue(':id',$id);
-                    $req->bindValue(':firstName',$firstName);
-                    $req->bindValue(':lastName',$lastName);
-                    $req->bindValue(':email',$email);
-                    $req->bindValue(':password',$password);
-                    $req->bindValue(':dob',$dob);
-                    $req->bindValue(':phNumber',$phNumber);
-                    $req->bindValue(':address',$address);
-                    $req->execute();
+                $run=mysqli_query($db,$sql);
+                if (!$run) {
+                    echo "<p> Query [$run] couldn't be executed </p>";
+                    echo mysqli_error($db);
                 }
-                catch (Exception $e){
-                    echo " Erreur ! ".$e->getMessage();
-                    echo " Les datas : " ;
-                    print_r($datas);
-                }
-
         }
+
+
         function searcAndRetriveUser($email,$password)
             {
-                $sql="SELECT * from users_db WHERE password=:password AND email=:email ";
                 $db = config::getConnection();
-                try{
-                    $req=$db->prepare($sql);
-                    $req->bindValue(':password',$password);
-                    $req->bindValue(':email',$email);
-                    $req->execute();
-                    $liste=$req->fetch();
-                    return $liste;
+                $sql="SELECT * from users_db WHERE password='$password' AND email='$email' ";
+                $run=mysqli_query($db,$sql);
+                if (!$run) {
+                    echo "<p> Query [$run] couldn't be executed </p>";
+                    echo mysqli_error($db);
                 }
-                catch (Exception $e){
-                    die('Erreur: '.$e->getMessage());
-                }
+                $liste=mysqli_fetch_assoc($run);
+                return $liste;
             }
             function insertImage($id,$file)
             {
