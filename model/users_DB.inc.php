@@ -8,9 +8,10 @@ class Users{
     private $password;
     private $phNumber;
     private $address;
+    private $photo;
 
 
-    function __construct($id,$firstName,$lastName,$email,$dob,$password,$phNumber,$address){
+    function __construct($id,$firstName,$lastName,$email,$dob,$password,$phNumber,$address,$photo){
           $this->id=$id;
           $this->firstName=$firstName;
           $this->lastName=$lastName;
@@ -19,6 +20,7 @@ class Users{
           $this->password=$password;
           $this->phNumber=$phNumber;
           $this->address=$address;
+          $this->photo=$photo;
 
 	}
 
@@ -62,6 +64,11 @@ class Users{
     {
 		return $this->address;
     }
+    function getPhoto()
+    {
+		return $this->photo;
+    }
+
 
     //////////////////////////////////////////////////////////////
 
@@ -101,6 +108,11 @@ class Users{
     function setPassword($password)
     {
       $this->password=$password;
+
+    }
+    function setPPhoto($photo)
+    {
+      $this->password=$photo;
 
     }
 

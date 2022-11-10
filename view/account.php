@@ -13,16 +13,29 @@
     <?php
         require "../model/users_DB.inc.php";
         require "../controller/users_DBC.inc.php";
-        // session_start();
-        // $user = $_SESSION['user'];
-        if(isset($_POST['signIn'])){
-            $bigUser=new Users('','','','','','','','');
-            $singIn=new Users_DBC;
-            $holdIn=$singIn->searcAndRetriveUser($_POST['email'],$_POST['password']);
-            if(isset($holdIn)){
-                $user=new Users($holdIn['id'],$holdIn['firstName'],$holdIn['lastName'],$holdIn['email'],$holdIn['dob'],$holdIn['password'],$holdIn['phNumber'],$holdIn['address']);
-                $bigUser=$user;
-            }
+        session_start();
+        $user = $_SESSION['user'];
+        if(isset($_POST['Update'])){
+            $updatedUser=new Users($user->getId(),$_POST['firstName'],$_POST['lastName'],$_POST['email'],$_POST['dob'],$user->getPassword(),$_POST['phNumber'],$_POST['address']);
+            $sqlC=new Users_DBC;
+            $sqlC->updateUser($updatedUser);
+            $user=$updatedUser;
+            $_SESSION['user']=$updatedUser;
+        }
+        if(isset($_POST['Cancel'])){
+            $user = $_SESSION['user'];
+        }
+        if(isset($_POST['Update1'])&&$user->getPassword()==$_POST["oldPassword"]&&$_POST["newPassword"]==$_POST["confirmNewPassword"]){
+            $updatedUser=new Users($user->getId(),$user->getFirstName(),$user->getLastName(),$user->getEmail(),$user->getDob(),$_POST["newPassword"],$user->getPhNumber(),$user->getAddress());
+            $sqlC=new Users_DBC;
+            $sqlC->updateUser($updatedUser);
+            $user=$updatedUser;
+            $_SESSION['user']=$updatedUser;
+        }
+        if(isset($_POST['Delete'])){
+            $sqlC=new Users_DBC;
+            $sqlC->deletUser($user->getId());
+            header( 'Location: html/account.html' );
         }
     ?>
         <section class="py-5 my-5">
@@ -30,12 +43,20 @@
                 <h1 class="mb-5">Account Settings</h1>
                 <div class="bg-white shadow rounded-lg d-block d-sm-flex">
                     <div class="profile-tab-nav border-right">
-                        <div class="p-4">
-                            <div class="img-circle text-center mb-3">
-                                <img src="img/user2.jpg" alt="Image" class="shadow">
+                        <form action="../controller/verify.inc.php" method="POST" enctype="multipart/form-data">
+                            <div class="p-4">
+                                <div class="img-circle text-center mb-3">
+                                   <img src="img/user2.jpg" alt="Image" class="shadow">
+                                </div>
+                                <!-- <div class="img-circle text-center mb-3">
+                                    <lable>
+                                        <img  class="shadow" id="logo" src="img/user2.jpg" alt="User placeholder" height="200">
+                                    </lable>
+                                    <input type="file" name="my_image">
+                                </div>-->
+                                <h4 class="text-center" ><?php echo $user->getFirstName();echo ' ';echo $user->getLastName() ?></h4>
                             </div>
-                            <h4 class="text-center">Kiran Acharya</h4>
-                        </div>
+                        </form>
                         <div
                             class="nav flex-column nav-pills"
                             id="v-pills-tab"
@@ -68,30 +89,6 @@
                             </a>
                             <a
                                 class="nav-link"
-                                id="security-tab"
-                                data-toggle="pill"
-                                href="#security"
-                                role="tab"
-                                aria-controls="security"
-                                aria-selected="false"
-                            >
-                                <i class="fa fa-user text-center mr-1"></i>
-                                Blogs
-                            </a>
-                            <a
-                                class="nav-link"
-                                id="application-tab"
-                                data-toggle="pill"
-                                href="#application"
-                                role="tab"
-                                aria-controls="application"
-                                aria-selected="false"
-                            >
-                                <i class="fa fa-tv text-center mr-1"></i>
-                                Reservations
-                            </a>
-                            <a
-                                class="nav-link"
                                 id="notification-tab"
                                 data-toggle="pill"
                                 href="#notification"
@@ -118,54 +115,48 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control" name='firstName' value="<?php echo $bigUser->getFirstName(); ?>">
+                                        <input type="text" class="form-control" name='firstName' value="<?php echo $user->getFirstName() ;?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Last Name</label>
-                                        <input type="text" class="form-control" name='lastName' value="<?php echo $bigUser->getLastName(); ?>">
+                                        <input type="text" class="form-control" name='lastName' value="<?php echo $user->getLastName() ; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="text" class="form-control" name='email' value="<?php echo $bigUser->getEmail(); ?>">
+                                        <input type="text" class="form-control" name='email' value="<?php echo $user->getEmail() ; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Phone number</label>
-                                        <input type="text" class="form-control" name='phNumber' value="<?php echo $bigUser->getPhNumber(); ?>">
+                                        <input type="text" class="form-control" name='phNumber' value="<?php echo $user->getPhNumber() ; ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Address</label>
-                                        <input type="text" class="form-control" name='address' value="<?php echo $bigUser->getAddress(); ?>">
+                                        <input type="text" class="form-control" name='address' value="<?php echo $user->getAddress(); ?>">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Date of birth</label>
-                                        <input type="date" class="form-control" name='dob' value="<?php echo $user->getDob(); ?>">
+                                        <input type="date" class="form-control" name='dob' value="<?php echo $user->getdob(); ?>">
                                     </div>
                                 </div>
                             </div>
                             <div>
                                 <button class="btn btn-primary" name='Update'>Update</button>
                                 <button class="btn btn-light" name='Cancel'>Cancel</button>
+                                <button class="btn btn-danger" name='Delete'>Delete account</button>
                             </div>
                         </div>
-                        <?php
-                            if(isset($_POST['Update'])){
-                                $updatedUser=new Users($bigUser->getId(),$_POST['firstName'],$_POST['lastName'],$_POST['email'],$_POST['dob'],$bigUser->getPassword(),$_POST['phNumber'],$_POST['address']);
-                                $sqlC=new Users_DBC;
-                                $sqlC->updateUsers($updatedUser);
-                                $bigUser=$updatedUser;
-                            }
-                        ?>
                         </form>
+                        <form action="account.php" method="POST">
                         <div
                             class="tab-pane fade"
                             id="password"
@@ -177,7 +168,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Old password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="oldPassword">
                                     </div>
                                 </div>
                             </div>
@@ -185,21 +176,22 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>New password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="newPassword">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label>Confirm new password</label>
-                                        <input type="password" class="form-control">
+                                        <input type="password" class="form-control" name="confirmNewPassword">
                                     </div>
                                 </div>
                             </div>
                             <div>
-                                <button class="btn btn-primary">Update</button>
-                                <button class="btn btn-light">Cancel</button>
+                                <button class="btn btn-primary" name='Update1'>Update</button>
+                                <button class="btn btn-light" name='Cancel2'>Cancel</button>
                             </div>
                         </div>
+                        </form>
                         <div
                             class="tab-pane fade"
                             id="security"

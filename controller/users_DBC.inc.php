@@ -14,8 +14,8 @@ class Users_DBC{
 
             }
 
-	    function addUsers($users){
-            $sql="INSERT into users_db (id,firstName,lastName,email,dob,password,phNumber,address) values (:id,:firstName,:lastName,:email,:dob,:password,:phNumber,:address)";
+	    function addUser($users){
+            $sql="INSERT into users_db (firstName,lastName,email,dob,password,phNumber,address) values (:firstName,:lastName,:email,:dob,:password,:phNumber,:address)";
             $db = config::getConnection();
             try{
                 $req=$db->prepare($sql);
@@ -27,7 +27,7 @@ class Users_DBC{
                 $password=$users->getPassword();
                 $phNumber=$users->getPhNumber();
                 $address=$users->getAddress();
-                $req->bindValue(':id',$id);
+
                 $req->bindValue(':firstName',$firstName);
                 $req->bindValue(':lastName',$lastName);
                 $req->bindValue(':email',$email);
@@ -43,7 +43,7 @@ class Users_DBC{
 
 	    }
 
-        function showUsers()
+        function retriveUsers()
             {
                 $sql="SElECT * FROM users_db";
                 $db = config::getConnection();
@@ -56,12 +56,13 @@ class Users_DBC{
                 }
             }
 
-        function deletUsers($password)
+
+        function deletUser($id)
             {
-                $sql="DELETE FROM users_db where password= :password";
+                $sql="DELETE FROM users_db where id= :id";
                 $db = config::getConnection();
                 $req=$db->prepare($sql);
-                $req->bindValue(':password',$password);
+                $req->bindValue(':id',$id);
                 try{
                     $req->execute();
                 }
@@ -70,7 +71,7 @@ class Users_DBC{
                 }
         }
 
-	    function updateUsers($users){
+	    function updateUser($users){
                 $sql="UPDATE users_db SET id=:id, firstName=:firstName, lastName=:lastName, email=:email,password=:password,dob=:dob,phNumber=:phNumber,address=:address WHERE id=:id";
 
                 $db = config::getConnection();
@@ -118,6 +119,23 @@ class Users_DBC{
                     die('Erreur: '.$e->getMessage());
                 }
             }
-}
+            function insertImage($id,$file)
+            {
+                $sql="UPDATE users_db SET photo=:file WHERE id=:id ";
+                $db = config::getConnection();
+                try{
+                    $req=$db->prepare($sql);
+                    $req->bindValue(':file',$file);
+                    $req->bindValue(':id',$id);
+                    $req->execute();
+                    $liste=$req->fetch();
+                    return $liste;
+                }
+                catch (Exception $e){
+                    die('Erreur: '.$e->getMessage());
+                }
+            }
+
+        }
 
 ?>
