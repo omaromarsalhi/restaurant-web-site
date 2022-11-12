@@ -41,8 +41,7 @@ class Users_DBC{
                     echo "<p> Query [$run] couldn't be executed </p>";
                     echo mysqli_error($db);
                 }
-                $liste=mysqli_fetch_assoc($run);
-                return $liste;
+                return $run;
             }
 
 
@@ -95,7 +94,8 @@ class Users_DBC{
 
             function insertImage($id,$file)
             {
-                $sql="UPDATE users_db SET photo='$file' WHERE id='$id' ";
+                echo $id;
+                $sql="UPDATE users_db SET photo='$file' WHERE id='$id'";
                 $db = config::getConnection();
                 $run=mysqli_query($db,$sql);
                 if (!$run) {

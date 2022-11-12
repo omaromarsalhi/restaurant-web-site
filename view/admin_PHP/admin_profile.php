@@ -342,8 +342,7 @@
                                             <div class="row mb-3">
                                                 <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                                 <div class="col-md-8 col-lg-4">
-
-                                                    <img src="data:image/jpg;base64,<?php echo base64_encode( $user->getPhoto()); ?>" />
+                                                    <img src="../img/<?php echo $user->getPhoto()?>">
                                                     <div class="pt-2">
                                                     <input  type="file" accepts='.png,.jpg,.gif' name='upload'>
                                                     <input type='submit' name='Upload' class='btn btn-primary btn-sm'>
