@@ -54,8 +54,6 @@ class Users_DBC{
                     echo "<p> Query [$run] couldn't be executed </p>";
                     echo mysqli_error($db);
                 }
-                $liste=mysqli_fetch_assoc($run);
-                return $liste;
         }
 
 	    function updateUser($users){

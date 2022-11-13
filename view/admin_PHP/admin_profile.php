@@ -349,6 +349,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            </form>
+                                            <form action="admin_profile.php" method='POST'>
                                             <div class="row mb-3">
                                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Fisrt Name</label>
                                                 <div class="col-md-8 col-lg-8">

@@ -122,72 +122,25 @@
                     <h2>Reservation</h2>
                     <p>Book a Table</p>
                 </div>
-                <form
-                    action="forms/book-a-table.php"
-                    method="post"
-                    role="form"
-                    class="php-email-form"
-                    data-aos="fade-up"
-                    data-aos-delay="100"
-                >
+                <form action="../../../controller/verify_reservation.inc.php" method="POST">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6 form-group">
-                            <input
-                                type="text"
-                                name="name"
-                                class="form-control"
-                                id="name"
-                                placeholder="Your Name"
-                                data-rule="minlen:4"
-                                data-msg="Please enter at least 4 chars"
-                            >
-                            <div class="validate"></div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-                            <input
-                                type="email"
-                                class="form-control"
-                                name="email"
-                                id="email"
-                                placeholder="Your Email"
-                                data-rule="email"
-                                data-msg="Please enter a valid email"
-                            >
-                            <div class="validate"></div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 form-group mt-3 mt-md-0">
-                            <input
-                                type="text"
-                                class="form-control"
-                                name="phone"
-                                id="phone"
-                                placeholder="Your Phone"
-                                data-rule="minlen:4"
-                                data-msg="Please enter at least 4 chars"
-                            >
-                            <div class="validate"></div>
-                        </div>
                         <div class="col-lg-4 col-md-6 form-group mt-3">
                             <input
-                                type="text"
-                                name="date"
+                                type="date"
                                 class="form-control"
+                                name="date"
                                 id="date"
                                 placeholder="Date"
-                                data-rule="minlen:4"
-                                data-msg="Please enter at least 4 chars"
                             >
                             <div class="validate"></div>
                         </div>
                         <div class="col-lg-4 col-md-6 form-group mt-3">
                             <input
-                                type="text"
-                                class="form-control"
+                                type="time"
                                 name="time"
+                                class="form-control"
                                 id="time"
                                 placeholder="Time"
-                                data-rule="minlen:4"
-                                data-msg="Please enter at least 4 chars"
                             >
                             <div class="validate"></div>
                         </div>
@@ -195,11 +148,9 @@
                             <input
                                 type="number"
                                 class="form-control"
-                                name="people"
-                                id="people"
+                                name="nbrp"
+                                id="nbrp"
                                 placeholder="# of people"
-                                data-rule="minlen:1"
-                                data-msg="Please enter at least 1 chars"
                             >
                             <div class="validate"></div>
                         </div>
@@ -213,14 +164,29 @@
                         ></textarea>
                         <div class="validate"></div>
                     </div>
-                    <div class="mb-3">
+                    <center>
+                        <img src="../../img/resto.png" alt="" class="img-fluid">
+                    </center>
+                    <center>
+                        <div class="col-lg-4 col-md-6 form-group mt-3">
+                            <input
+                                type="number"
+                                name="nbrt"
+                                id="nbrt"
+                                placeholder="# of table"
+                            >
+                            <div class="validate"></div>
+                        </div>
+                    </center>
+                    <br>
+                    <div class="text-center">
+                        <button type="submit" name="sub">Book a Table</button>
+                    </div>
+                    <!-- <div class="mb-3">
                         <div class="loading">Loading</div>
                         <div class="error-message"></div>
                         <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit">Book a Table</button>
-                    </div>
+                    </div> -->
                 </form>
             </div>
         </section>

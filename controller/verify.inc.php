@@ -77,3 +77,10 @@ if (isset($_POST['Upload']) && isset($_FILES['upload'])) {
 		header("Location: ../view/admin_PHP/admin_profile.php?error=$em");
 	}
 }
+
+// delet user from dashbord
+if (isset($_GET['id'])) {
+	$usersToShow = new Users_DBC;
+	$usersToShow->deletUser($_GET['id']);
+	header("Location: ../view/html/pagesAdmin/users.php");
+}

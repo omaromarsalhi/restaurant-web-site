@@ -94,7 +94,7 @@ class Users{
 
     function setDob($dob)
     {
-		$this->dob;
+		$this->dob=$dob;
     }
     function setPhNumber($phNumber)
     {
