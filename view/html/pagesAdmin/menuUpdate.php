@@ -1,3 +1,17 @@
+<?php
+require '../../../controller/menu_DBC.inc.php';
+require '../../../model/menu_DB.inc.php';
+session_start();
+
+if (isset($_GET['id1'])) {
+        $holdIn=new Menu_DBC;
+        $menu=$holdIn->searchRetriveMenu($_GET['id1']);
+        $plat= new Menu_db($menu['id'],$menu['nomPlat'],$menu['prixPlat']);
+        $_SESSION['idPlat']=$menu['id'];
+}
+?>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -103,31 +117,29 @@
     <body>
         <div class="main-block">
             <h1>Registration</h1>
-            <form action="../../../pw/controller/verifyMenu.inc.php" method="POST">
+            <form action="../../../controller/verifyMenu.inc.php" method="POST">
                 <hr>
                 <label id="icon" for="name">
                     <i class="fas fa-envelope"></i>
                 </label>
                 <input
                     type="text"
-                    name="name"
+                    name="nomPlat"
                     id="name"
-                    placeholder="Name"
-                    required
+                    value='<?php echo $plat->getnomPlat();?>'
                 >
                 <label id="icon" for="name">
                     <i class="fas fa-user"></i>
                 </label>
                 <input
                     type="text"
-                    name="name"
+                    name="prixPlat"
                     id="name"
-                    placeholder="Price"
-                    required
+                    value='<?php echo $plat->getprixPlat();?>'
                 >
                 <hr>
                 <div class="btn-block">
-                    <button type="submit" name="save">Save</button>
+                    <button type="submit" name="saveChanges">Save</button>
                 </div>
             </form>
         </div>

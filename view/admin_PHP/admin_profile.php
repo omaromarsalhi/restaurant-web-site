@@ -21,6 +21,7 @@
         <link id="pagestyle" href="../assets_Admin/css/material-dashboard.css?v=3.0.0" rel="stylesheet">
         <!-- CSS Files -->
         <link href="../assets_Admin/css/style.css" rel="stylesheet">
+        <link href="../assets_Admin/css/uploadButt.css" rel="stylesheet">
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
@@ -28,6 +29,7 @@
             crossorigin="anonymous"
             referrerpolicy="no-referrer"
         >
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
     <body class="g-sidenav-show bg-gray-200">
     <?php
@@ -261,7 +263,7 @@
                     <div class="col-xl-4">
                         <div class="card">
                             <div class="card-body profile-card pt-0 d-flex flex-column align-items-center">
-                            <img src="../img/" alt="Profile" class="rounded-circle">
+                                <img src="../<?php echo $user->getPhoto();?>" alt="Profile" class="rounded-circle">
                                 <h2><?php echo strtoupper($user->getFirstName());echo ' ';echo strtoupper($user->getLastName());?> </h2>
                                 <h3>ADMIN</h3>
                                 <div class="social-links mt-2">
@@ -342,14 +344,14 @@
                                             <div class="row mb-3">
                                                 <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                                 <div class="col-md-8 col-lg-4">
-                                                    <img src="../img/<?php echo $user->getPhoto()?>">
+                                                    <img src="../<?php echo $user->getPhoto();?>" alt="Profile">
                                                     <div class="pt-2">
                                                     <input  type="file" accepts='.png,.jpg,.gif' name='upload'>
                                                     <input type='submit' name='Upload' class='btn btn-primary btn-sm'>
                                                     </div>
                                                 </div>
                                             </div>
-                                            </form>
+                                        </form>
                                             <form action="admin_profile.php" method='POST'>
                                             <div class="row mb-3">
                                                 <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Fisrt Name</label>

@@ -1,6 +1,7 @@
 <?php
 require "../controller/users_DBC.inc.php";
 require "../model/users_DB.inc.php";
+date_default_timezone_set("Etc/GMT-8");
 session_start();
 // sign in verification
 if(isset($_POST['signIn'])){
@@ -55,12 +56,11 @@ if (isset($_POST['Upload']) && isset($_FILES['upload'])) {
 			$allowed_exs = array("jpg", "jpeg", "png");
 			if (in_array($img_ex_lc, $allowed_exs)) {
 				$new_img_name = uniqid("IMG-", true).'.'.$img_ex_lc;
-				$img_upload_path = 'uploads/'.$new_img_name;
+				$img_upload_path = '../view/img2/'.$new_img_name;
 				move_uploaded_file($tmp_name, $img_upload_path);
                 $user = $_SESSION['user'];
                 $photoToAdd=new Users_DBC;
-                $photoToAdd->insertImage($user->getId(),$new_img_name);
-
+                $photoToAdd->insertImage($user->getId(),$img_upload_path);
                 $holdIn=$photoToAdd->searcAndRetriveUser($user->getEmail(),$user->getPassword());
                 $user2=new Users($holdIn['id'],$holdIn['firstName'],$holdIn['lastName'],$holdIn['email'],$holdIn['dob'],$holdIn['password'],$holdIn['phNumber'],$holdIn['address'],$holdIn['photo']);
                 $_SESSION['user'] = $user2;

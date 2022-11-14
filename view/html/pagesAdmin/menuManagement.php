@@ -299,7 +299,7 @@
                                                     </td>
 
                                                     <td>
-                                                        <a href='../../../controller/verifyMenu.inc.php?id1=<?php echo $row['id'];?>'>save</a>
+                                                        <a href='menuUpdate.php?id1=<?php echo $row['id'];?>'>Edit</a>
                                                     </td>
                                                     <td>
                                                         <a href='../../../controller/verifyMenu.inc.php?id2=<?php echo $row['id'];?>'>Delete</a>

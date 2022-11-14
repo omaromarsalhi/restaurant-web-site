@@ -46,8 +46,6 @@ class Menu_DBC{
                 $id=$menu->getId();
                 $nomPlat=$menu->getnomPlat();
                 $prixPlat=$menu->getprixPlat();
-
-
                 $sql="UPDATE menu_db SET  nomPlat='$nomPlat', prixPlat='$prixPlat' WHERE id='$id'";
                 $db = config::getConnection();
                 $run=mysqli_query($db,$sql);
